@@ -58,8 +58,9 @@ export interface IJtd {
 }
 
 export interface IJtdMetadata {
-  name: string,
-  rootElement: boolean,
+  name?: string,
+  rootElement?: boolean,
+  id?: boolean,
 }
 ///--- min
 
@@ -122,6 +123,7 @@ export interface IJtdMin {
 }
 
 export interface IJtdMinMetadata {
-  n: string; // name
+  n?: string; // name
   re?: boolean; // rootElement
+  id?: boolean; // id
 }
