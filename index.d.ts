@@ -108,8 +108,8 @@ export interface IJtdMinRoot extends IJtdMin {
 /**
  * The definition of a type.
  */
-export interface IJtdMin {
-  md?: IJtdMinMetadata; // metadata
+export interface IJtdMin<T = any> {
+  md?: IJtdMinMetadata<T>; // metadata
   rq?: boolean; // opposite of nullable - required
   ref?: string;
   t?: JtdMinType | string; // type
@@ -122,7 +122,7 @@ export interface IJtdMin {
   args?: IJtdMinDict; // arguments
 }
 
-export interface IJtdMinMetadata {
+export type IJtdMinMetadata<T = any> = T & {
   n?: string; // name
   re?: boolean; // rootElement
   id?: boolean; // id
