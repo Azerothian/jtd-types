@@ -25,8 +25,8 @@ export const enum JtdType {
   UNKNOWN = "unknown"
 }
 
-export interface IJtdDict {
-  [name: string]: IJtd;
+export interface IJtdDict<T extends IJtdMetadata = IJtdMetadata> {
+  [name: string]: IJtd<T>;
 }
 
 /**
@@ -35,15 +35,15 @@ export interface IJtdDict {
  * @see https://tools.ietf.org/html/rfc8927 RFC8927
  * @see https://jsontypedef.com/docs/jtd-in-5-minutes JTD in 5 minutes
  */
-export interface IJtdRoot extends IJtd {
-  definitions?: IJtdDict;
+export interface IJtdRoot<T extends IJtdMetadata = IJtdMetadata> extends IJtd<T> {
+  definitions?: IJtdDict<T>;
 }
 
 /**
  * The definition of a type.
  */
-export interface IJtd {
-  metadata?: IJtdMetadata;
+export interface IJtd<T extends IJtdMetadata = IJtdMetadata> {
+  metadata?: T;
   nullable?: boolean;
   ref?: string;
   type?: JtdType | string;
@@ -91,8 +91,8 @@ export interface IJtdMetadata {
   UNKNOWN = "u",
 }
 
-export interface IJtdMinDict {
-  [name: string]: IJtdMin;
+export interface IJtdMinDict<T extends IJtdMinMetadata = IJtdMinMetadata> {
+  [name: string]: IJtdMin<T>;
 }
 
 /**
@@ -101,28 +101,28 @@ export interface IJtdMinDict {
  * @see https://tools.ietf.org/html/rfc8927 RFC8927
  * @see https://jsontypedef.com/docs/jtd-in-5-minutes JTD in 5 minutes
  */
-export interface IJtdMinRoot extends IJtdMin {
-  def?: IJtdMinDict; // definitions
+export interface IJtdMinRoot<T extends IJtdMinMetadata = IJtdMinMetadata> extends IJtdMin<T> {
+  def?: IJtdMinDict<T>; // definitions
 }
 
 /**
  * The definition of a type.
  */
-export interface IJtdMin<T = any> {
-  md?: IJtdMinMetadata<T>; // metadata
+export interface IJtdMin<T extends IJtdMinMetadata = IJtdMinMetadata> {
+  md?: T; // metadata
   rq?: boolean; // opposite of nullable - required
   ref?: string;
   t?: JtdMinType | string; // type
   em?: Array<string>; // enum
-  el?: IJtdMin; //elements
-  v?: IJtdMin; // values
-  p?: IJtdMinDict; // properties
+  el?: IJtdMin<T>; //elements
+  v?: IJtdMin<T>; // values
+  p?: IJtdMinDict<T>; // properties
   d?: string; // discriminator
-  mp?: IJtdMinDict; // mapping
-  args?: IJtdMinDict; // arguments
+  mp?: IJtdMinDict<T>; // mapping
+  args?: IJtdMinDict<T>; // arguments
 }
 
-export type IJtdMinMetadata<T = any> = T & {
+export interface IJtdMinMetadata {
   n?: string; // name
   re?: boolean; // rootElement
   id?: boolean; // id
